@@ -15,12 +15,12 @@ public class UI {
             System.out.println("Menu ");
             System.out.println("1. Add superhero");
             System.out.println("2. Remove Superhero");
-            System.out.println("3. Vis liste over superhelte");
-            System.out.println("4. Vis superhelt");
-            System.out.println("5. Vis alle superhelte sorteret");
+            System.out.println("3. Show a list of all the superheroes");
+            System.out.println("4. Show a superhero");
+            System.out.println("5. Show all superheroes sorted");
             System.out.println("6. Edit superhero");
             System.out.println("7. Create Superhero");
-            System.out.println("8. Afslut programmet");
+            System.out.println("8. Exit the program");
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();

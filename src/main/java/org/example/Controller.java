@@ -7,6 +7,11 @@ public class Controller {
     private final ArrayList<Superhero> superheroes = new ArrayList<>();
     private final Database database;
 
+
+    public Controller(Database database) {
+        this.database = database;
+    }
+
     public boolean addSuperhero(String Name, String RealName, String superPower, int yearCreated, Boolean isHuman, int strengt) {
         return database.addSuperheroes(Name, RealName, superPower, yearCreated, isHuman, strengt);
     }
@@ -23,10 +28,6 @@ public class Controller {
         return database.removeSuperhero(superheroName);
     }
 
-    public Controller(Database database) {
-        this.database = database;
-    }
-
     public void searchSuperhero() {
         database.searchSuperhero();
     }
@@ -38,8 +39,7 @@ public class Controller {
 
     public void CreateSuperhero(
             String name, String realName, String superPower, int yearCreated, Boolean isHuman, int strength) {
+
     }
 }
-
-
 

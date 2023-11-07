@@ -1,5 +1,4 @@
 package org.example;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +6,8 @@ import java.util.Scanner;
 public class Database {
 
     private final ArrayList<Superhero> superheroes;
+    private final FileHandler filehandler = new FileHandler();
+    ArrayList<Superhero> superheroDataList = filehandler.loadAllData();
     private final Scanner sc = new Scanner(System.in);
 
     private final Controller controller = new Controller(this);
@@ -14,8 +15,8 @@ public class Database {
     public Database() {
         this.superheroes = new ArrayList<>();
 
-        Superhero superhero1 = new Superhero("Barry Allen", "The Flash ", "Super Speed", 1734, true, 10000);
-        Superhero superhero2 = new Superhero("Bruce Banner", "Hulk ", "Strong", 1938, true, 30000);
+        Superhero superhero1 = new Superhero("Barry Allen", "The Flash ", "Super Speed ", 1734, true, 10000);
+        Superhero superhero2 = new Superhero("Bruce Banner", "Hulk ", "Strong ", 1938, true, 30000);
 
         superheroes.add(superhero1);
         superheroes.add(superhero2);
@@ -49,15 +50,15 @@ public class Database {
 
     public void searchSuperhero() {
 
-        System.out.println("Skriv navnet på superhelten der skal findes");
+        System.out.println("Write the government name of the superhero ");
         String userInput = sc.nextLine();
 
         ArrayList<Superhero> searchResult = getSuperheros();
 
         if (searchResult.isEmpty()) {
-            System.out.println("Der blev ikke fundet nogen superhelt ud fra din søgning");
+            System.out.println("Sorry there was no superhero with that name");
         } else if (searchResult.size() > 1) {
-            System.out.println("Vælg en superhelt");
+
             int tæller = 0;
             for (Superhero hero : searchResult) {
                 if (hero.getName().startsWith(userInput)) {
@@ -74,19 +75,19 @@ public class Database {
     }
 
     public void editSuperhero() {
-        System.out.println("Hvilken superhelt vil du redigere?");
+        System.out.println("Please choose a superhero you would like to edit");
         searchSuperhero();
         Superhero superhero;
         boolean chosenHero = false;
         while (!chosenHero) {
-            System.out.println("Indtast ID på den superhelt der skal redigereres");
+            System.out.println("Type in the ID on the superhero you would like to edit");
             int heroID = Integer.parseInt(sc.nextLine());
             superhero = getSuperheros().get(heroID);
 
-            System.out.println("Er du sikker på at du vil foretage ændringer på superhelten: " + superhero.toString());
+            System.out.println("Are you sure you would like to make changes on the superhero: " + superhero.toString());
             String answer = sc.nextLine().toLowerCase();
 
-            if (answer.startsWith("J")) {
+            if (answer.startsWith("Y")) {
                 chosenHero = true;
             }
         }
