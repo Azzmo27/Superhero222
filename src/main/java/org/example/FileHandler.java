@@ -1,26 +1,32 @@
 package org.example;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandler {
-    private final File file = new File("superheroes.cvs");
+
+
+    private final File cvsFile = new File("superheroes.csv");
+
 
     public ArrayList<Superhero> loadAllData() {
-        Scanner fileScanner = null;
         ArrayList<Superhero> superheroDataList = new ArrayList<>();
+        Scanner fileScanner;
         try {
-            fileScanner = new Scanner(file);
+            fileScanner = new Scanner(cvsFile, StandardCharsets.ISO_8859_1);
             fileScanner.nextLine();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
         }
-
-        Superhero superheroData1 = null;
+        Superhero superhero1 = null;
         while (fileScanner.hasNext()) {
             String line = fileScanner.nextLine();
             String[] attributes = line.split(";");
+            Superhero superheroData1 = null;
             superheroData1 = new Superhero(
                     attributes[0],
                     attributes[1],
@@ -29,12 +35,23 @@ public class FileHandler {
                     (Boolean.parseBoolean(attributes[4])),
                     (Integer.parseInt(attributes[5]))
 
-                    );
+            );
             superheroDataList.add(superheroData1);
 
-
         }
-        fileScanner.close();
         return superheroDataList;
     }
-}
+
+        public void saveSuperhero(ArrayList<Superhero> superheroDataList, File fileToSaveto) throws FileNotFoundException {
+            PrintStream saveToFile = new PrintStream(fileToSaveto);
+
+            for (Superhero hero : superheroDataList) {
+                saveToFile.println(hero.getName() + ";" +
+                        hero.getRealName() + ";" +
+                        hero.getSuperPower() + ";" +
+                        hero.getYearCreated() + ";" +
+                        hero.getIsHuman() + ";" +
+                        hero.getStrength());
+            }
+        }}
+
