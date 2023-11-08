@@ -41,5 +41,13 @@ public class Controller {
             String name, String realName, String superPower, int yearCreated, Boolean isHuman, int strength) {
 
     }
+
+    public void viewAsuperhero(){
+        database.viewAsuperhero();
+    }
+
+    public void superheroSortedByName(){
+        database.superheroSortedByName();
+    }
 }
 

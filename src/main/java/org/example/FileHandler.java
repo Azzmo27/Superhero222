@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandler {
-    private final File file = new File("SuperheroData.cvs");
+    private final File file = new File("superheroes.cvs");
 
     public ArrayList<Superhero> loadAllData() {
         Scanner fileScanner = null;
