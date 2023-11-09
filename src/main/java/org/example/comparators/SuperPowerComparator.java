@@ -1,4 +1,4 @@
-package org.example.Comparators;
+package org.example.comparators;
 
 import org.example.Superhero;
 

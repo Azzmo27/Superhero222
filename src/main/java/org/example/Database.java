@@ -1,5 +1,5 @@
 package org.example;
-import org.example.Comparators.*;
+import org.example.comparators.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
