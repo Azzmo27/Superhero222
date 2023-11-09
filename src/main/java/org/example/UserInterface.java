@@ -24,12 +24,14 @@ public class UserInterface {
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
+                String superheroName = null;
                 switch (choice) {
+
                     case 1 -> {
                         System.out.println("Write in the real name: ");
-                        String name = scanner.nextLine();
+                        String realName = scanner.nextLine();
                         System.out.println("Write in your superhero name: ");
-                        String superheroName = scanner.nextLine();
+                        superheroName= scanner.nextLine();
                         System.out.println("Write in superpower: ");
                         String superpower = scanner.nextLine();
                         System.out.println("Write in the year of creation: ");
@@ -49,23 +51,29 @@ public class UserInterface {
                         System.out.println("How strong is your superhero? ");
                         int strength = scanner.nextInt();
                         scanner.nextLine();
-                        controller.addSuperhero(name, superheroName, superpower, yearCreated, isHuman, strength);
+                        controller.addSuperhero(realName,superheroName, superpower, yearCreated, isHuman, strength);
                         System.out.println("The superhero is added to the database.");
                         System.out.println();
                     }
-                    case 2 -> database.viewAsuperhero();
-                    case 3 -> database.showSuperheroes();
-                    case 4 -> database.searchSuperhero();
+                    case 2 -> controller.viewAsuperhero();
+                    case 3 -> controller.showSuperheroes();
+                    case 4 -> controller.searchSuperhero();
                     case 5 -> {
-                        System.out.println("Superhero sorted by name:");
-                        database.superheroSortedByName();
+                        System.out.println("Menu of sorted optio ns! please choose one: ");
+                        System.out.println("1.Sorted by superhero name");
+                        System.out.println("2.Sorted by government name");
+                        System.out.println("3.Sorted by superpowers");
+                        System.out.println("4.Sorted by year year created");
+                        System.out.println("5.Sorted if superhero is human or not");
+                        System.out.println("6.Sorted by strength");
+                        controller.SortedOptions();
                     }
-                    case 6 -> database.editSuperhero();
+                    case 6 -> controller.editSuperhero();
                     case 7 -> {
                         System.out.println("Write in the name of the superhero that you would like to delete");
-                        database.showSuperheroes();
+                        controller.showSuperhero();
                         String superName = scanner.nextLine();
-                        database.removeSuperhero(superName);
+                        controller.removeSuperhero(superName);
                     }
                     case 8 -> {
                         System.out.println("Goodbye!");
@@ -82,22 +90,15 @@ public class UserInterface {
             } catch (Exception e) {
                 System.out.println("An error has occurred: " + e.getMessage());
                 scanner.nextLine();
-            }//sorteret
-            int Sorted = scanner.nextInt();
-            scanner.nextLine();
-            switch (Sorted) {
-                case 1 -> database.superheroSortedByName();
-                case 2 -> database.SuperheroName();
-                case 3 -> database.SuperPowerComparator();
-                case 4 -> database.yearCreated();
-                case 5 -> database.isHuman();
-                case 6 -> database.strength();
-                default -> System.out.println("Invalid choice. Try again ...");
             }
-        }
 
+
+        }
     }
+}
 
-        }
+
+
+
 
 

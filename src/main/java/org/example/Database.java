@@ -2,61 +2,55 @@ package org.example;
 import org.example.Comparators.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
 public class Database {
-    private final Controller controller = new Controller(this);
-    private  ArrayList<Superhero> superheroes;
+    private ArrayList<Superhero> superheroes;
     private final Scanner sc = new Scanner(System.in);
     private final File file = new File("superheroes.cvs");
     private final FileHandler filehandler = new FileHandler();
 
     public Database() {
 
-        try {
+         try {
             this.superheroes = filehandler.loadAllData();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-        //Get-methods
-        public int getSize() {
-            try {
-                superheroes = filehandler.loadAllData();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return superheroes.size();
-        }
-
-    public boolean addSuperheroes(String name, String realName, String superpower, int yearCreated, boolean isHuman, int strength) {
-        Superhero newSuperhero = new Superhero(name, realName, superpower, yearCreated, isHuman, strength);
+    public void addSuperheroes(String realName, String superheroName, String superpower, int yearCreated, boolean isHuman, int strength) throws FileNotFoundException {
+        Superhero newSuperhero = new Superhero(realName, superheroName, superpower, yearCreated, isHuman, strength);
         superheroes.add(newSuperhero);
-        return true;
+        filehandler.saveSuperhero(superheroes, file);
+
     }
 
     public void showSuperheroes() {
+        PowerandSuperheroComparator comporson = new PowerandSuperheroComparator();
+        Collections.sort(superheroes,comporson);
         System.out.println("A list over all the superheroes: ");
         for (Superhero superhero : superheroes) {
             System.out.println(superhero);
         }
+
     }
 
     public boolean removeSuperhero(String superheroName) {
         for (Superhero superhero : superheroes) {
-            if (superhero.getName().equals(superheroName)) {
-                superheroes.remove(superheroName);
+            if (superhero.getRealName().equalsIgnoreCase(superheroName)) {
+                superheroes.remove(superhero);
                 System.out.println("The superhero with the name " + superheroName + " got removed from the database.");
+                System.out.println("Here is the list of the remaining superheroes" + superheroes + "\n" );
                 return true;
             }
         }
         System.out.println("The superhero with the name " + superheroName + " could not be found in the database");
         return false;
-    }
 
+    }
 
     public void searchSuperhero() {
 
@@ -71,10 +65,10 @@ public class Database {
 
             int counter = 0;
             for (Superhero hero : searchResult) {
-                if (hero.getName().startsWith(userInput)) {
+                if (hero.getRealName().startsWith(userInput)) {
                     System.out.println("SuperheroID: " + counter++ + "\n" +
-                            hero.getName() + ": superhero Name is - " +
-                            hero.getRealName() + "\nAbilities: " +
+                            hero.getRealName() + ": superhero name is - " +
+                            hero.getSuperheroName() + "\nAbilities: " +
                             hero.getSuperPower() + "\nYear created: " +
                             hero.getYearCreated() + "\nis a Human: " +
                             hero.getIsHuman() + "\nTotal strength: " +
@@ -83,14 +77,13 @@ public class Database {
             }
         }
     }
-
     public void editSuperhero() {
         System.out.println("Please choose a superhero you would like to edit");
         searchSuperhero();
         Superhero superhero;
         boolean chosenHero = false;
         while (!chosenHero) {
-            System.out.println("Type in the ID on the superhero you would like to edit");
+            System.out.println("Type in the ID on the superhero, you would like to edit");
             int heroID = Integer.parseInt(sc.nextLine());
             superhero = getSuperheros().get(heroID);
 
@@ -101,45 +94,42 @@ public class Database {
                 chosenHero = true;
             }
         }
-
     }
-
     private ArrayList<Superhero> getSuperheros() {
         return superheroes;
     }
 
-    public void viewAsuperhero(){
-        System.out.println("Write in the name of the superhero you would like to view:");
+    public void viewAsuperhero() {
+        System.out.println("Type in the name of the superhero you would like to see:");
         String superName = sc.nextLine();
-        // her bliver der søgt efter den valgte superhelt i databasen
+
         Superhero chosenSuperhero = null;
         for (Superhero superhero : getSuperheros()) {
-            if (superhero.getName().equalsIgnoreCase(superName)) {
+            if (superhero.getSuperheroName().equalsIgnoreCase(superName)) {
                 chosenSuperhero = superhero;
                 break;
-                // her bliver søgningen stoppet pga break
+
             }
         }
         if (chosenSuperhero != null) {
-            // Hvis den valgte superhelt blev fundet, udskriv oplysningerne om den
             System.out.println("Information:");
-            System.out.println("Name: " + chosenSuperhero.getName());
+            System.out.println("Superhero Name: " + chosenSuperhero.getSuperheroName());
             System.out.println("Real Name: " + chosenSuperhero.getRealName());
             System.out.println("Superpower: " + chosenSuperhero.getSuperPower());
             System.out.println("Year Created: " + chosenSuperhero.getYearCreated());
-            System.out.println("Is Human: " + chosenSuperhero.getIsHuman());
+            System.out.println("Is the superhero Human: " + chosenSuperhero.getIsHuman());
             System.out.println("Strength: " + chosenSuperhero.getStrength());
         } else {
-            System.out.println("Superhero with the name " + superName + " was not found sorry...");
+            System.out.println("The superhero with the name " + superName + " was not found sorry...");
         }
     }
 
-    public void superheroSortedByName(){
+    public void superheroSortedByName() {
         RealNameComparator comparator = new RealNameComparator();
         Collections.sort(superheroes, comparator);
 
-        for (Superhero superhero : superheroes){
-            System.out.println(superhero.getName());
+        for (Superhero superhero : superheroes) {
+            System.out.println(superhero.getRealName());
         }
 
     }
@@ -148,18 +138,20 @@ public class Database {
         SuperheroComparator comparator = new SuperheroComparator();
         Collections.sort(superheroes, comparator);
 
-        for (Superhero superhero : superheroes){
-            System.out.println(superhero.getRealName());
+        for (Superhero superhero : superheroes) {
+            System.out.println(superhero.getSuperheroName());
         }
     }
+
     public void SuperPowerComparator() {
         SuperPowerComparator comparator = new SuperPowerComparator();
         Collections.sort(superheroes, comparator);
 
-        for (Superhero superhero : superheroes){
+        for (Superhero superhero : superheroes) {
             System.out.println(superhero.getSuperPower());
         }
     }
+
     public void yearCreated() {
         YearCreatedComparator comparator = new YearCreatedComparator();
         Collections.sort(superheroes, comparator);
@@ -169,6 +161,7 @@ public class Database {
         }
 
     }
+
     public boolean isHuman() {
         IshumanComparator comparator = new IshumanComparator();
         Collections.sort(superheroes, comparator);
@@ -181,29 +174,31 @@ public class Database {
         return false;
     }
 
-        public void strength() {
-            StrengthComparator comparator = new StrengthComparator();
-            Collections.sort(superheroes, comparator);
+    public void strength() {
+        StrengthComparator comparator = new StrengthComparator();
+        Collections.sort(superheroes, comparator);
 
-            for (Superhero superhero : superheroes) {
-                System.out.println(superhero.getStrength());
-            }
+        for (Superhero superhero : superheroes) {
+            System.out.println(superhero.getStrength());
+        }
+    }
+
+    // this method (switch case ) is a menu of the sorted attributes.
+    public void sortedOptions() {
+        int Sorted = sc.nextInt();
+        sc.nextLine();
+        switch (Sorted) {
+            case 1 -> superheroSortedByName();
+            case 2 -> SuperheroName();
+            case 3 -> SuperPowerComparator();
+            case 4 -> yearCreated();
+            case 5 -> isHuman();
+            case 6 -> strength();
+            default -> System.out.println("Invalid choice. Try again ...");
         }
 
-// den
-       /* public void sortedOptions() {
-            int Sorted = sc.nextInt();
-            sc.nextLine();
-            switch (Sorted) {
-                case 1 -> superheroSortedByName();
-                case 2 -> SuperheroName();
-                case 3 -> SuperPowerComparator();
-                case 4 -> yearCreated();
-                case 5 -> isHuman();
-                case 6 -> strength();
-                default -> System.out.println("Invalid choice. Try again ...");
-            }*/
-        }
+    }
 
 
+}
 

@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-
     private final File cvsFile = new File("superheroes.csv");
-
 
     public ArrayList<Superhero> loadAllData() {
         ArrayList<Superhero> superheroDataList = new ArrayList<>();
@@ -45,13 +43,14 @@ public class FileHandler {
         public void saveSuperhero(ArrayList<Superhero> superheroDataList, File fileToSaveto) throws FileNotFoundException {
             PrintStream saveToFile = new PrintStream(fileToSaveto);
 
-            for (Superhero hero : superheroDataList) {
-                saveToFile.println(hero.getName() + ";" +
-                        hero.getRealName() + ";" +
-                        hero.getSuperPower() + ";" +
-                        hero.getYearCreated() + ";" +
-                        hero.getIsHuman() + ";" +
-                        hero.getStrength());
+            for (Superhero superhero2 : superheroDataList) {
+                saveToFile.println(superhero2.getRealName() + ";" +
+                        superhero2.getSuperheroName() + ";" +
+                        superhero2.getSuperPower() + ";" +
+                        superhero2.getYearCreated() + ";" +
+                        superhero2.getIsHuman() + ";" +
+                        superhero2.getStrength());
             }
-        }}
+        }
+}
 
