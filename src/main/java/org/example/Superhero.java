@@ -15,8 +15,8 @@ public class Superhero {
 
     Superhero(String Name, String RealName, String superPower, int yearCreated, Boolean isHuman, int strength) {
 
-        this.Name = Name;
-        this.RealName = RealName;
+        this.realName = realName;
+        this.superheroName = superheroName;
         this.superPower = superPower;
         this.yearCreated = yearCreated;
         this.isHuman = isHuman;
@@ -24,12 +24,12 @@ public class Superhero {
     }
 
 
-    public String getName() {
-        return Name;
+    public String getRealName() {
+        return realName;
     }
 
-    public String getRealName() {
-        return RealName;
+    public String getSuperheroName() {
+        return superheroName;
     }
 
     public String getSuperPower() {
@@ -53,9 +53,9 @@ public class Superhero {
 
     @Override
     public String toString() {
-        return "Superhero:  "
-                + Name +
-                ", Name = " + Name +
+        return "\n" + "Superhero:"
+                 + superheroName +
+                ", Name = " + realName +
                 ", Powers = " + superPower +
                 ", Year of creation = " + yearCreated +
                 ", Human = " + isHuman +
