@@ -1,10 +1,8 @@
 package org.example;
 import org.example.comparators.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-
 
 public class Database {
     private ArrayList<Superhero> superheroes;
@@ -198,7 +196,6 @@ public class Database {
         }
 
     }
-
 
 }
 

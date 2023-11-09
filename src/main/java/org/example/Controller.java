@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    private final ArrayList<Superhero> superheroes = new ArrayList<>();
+
     private final Database database;
 
 
