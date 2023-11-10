@@ -40,17 +40,29 @@ public class FileHandler {
         return superheroDataList;
     }
 
-        public void saveSuperhero(ArrayList<Superhero> superheroDataList, File fileToSaveto) throws FileNotFoundException {
-            PrintStream saveToFile = new PrintStream(fileToSaveto);
-
-            for (Superhero superhero2 : superheroDataList) {
-                saveToFile.println(superhero2.getRealName() + ";" +
-                        superhero2.getSuperheroName() + ";" +
-                        superhero2.getSuperPower() + ";" +
-                        superhero2.getYearCreated() + ";" +
-                        superhero2.getIsHuman() + ";" +
-                        superhero2.getStrength());
+    public void saveSuperhero(ArrayList<Superhero> superheroDataList, File fileToSaveTo) {
+        try (PrintStream saveToFile = new PrintStream(fileToSaveTo)) {
+            for (Superhero superhero : superheroDataList) {
+                saveToFile.println(
+                        superhero.getRealName() + ";" +
+                                superhero.getSuperheroName() + ";" +
+                                superhero.getSuperPower() + ";" +
+                                superhero.getYearCreated() + ";" +
+                                superhero.getIsHuman() + ";" +
+                                superhero.getStrength()
+                );
             }
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
         }
+
+    }
+
 }
+
+
+
+
+
 
